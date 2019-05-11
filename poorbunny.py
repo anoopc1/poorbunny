@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 import argparse
+import os
 
 import cherrypy
 
@@ -12,12 +13,12 @@ from bunny_commands import CommandFactory, ResultType
 
 DEFAULT_PORT = 10086
 DETAULT_CMD = 'g'
-
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class PoorBunny(object):
-    def __init__(self, commands=None):
+    def __init__(self, commands=None, config_path=None):
         if not commands:
-            commands = CommandFactory.export()
+            commands = CommandFactory.export(config_path=config_path)
         self.commands = commands
 
     @cherrypy.expose
@@ -26,15 +27,17 @@ class PoorBunny(object):
 
     def do_command(self, *args, **kwargs):
         if args:
-            try:
-                method, margs = args[0].split(None, 1)
-            except ValueError:
-                method = None
-            if not method or method not in self.commands.cmd_list:
+            args_list = args[0].strip().split(None, 1)
+            if len(args_list) < 1 or args_list[0] not in self.commands.cmd_list:
                 method = DETAULT_CMD
-                margs = args[0]
+                margs = args[0:]
+            else:
+                method = args_list[0]
+                margs = args_list[1:]
             cmd = self.commands.cmd_list.get(method, None)
-            result, rtype = cmd(margs)
+            result, rtype = cmd(*margs)
+            print("\n\nRequest (method: '{}', args: {})".format(method, margs))
+            print("Resolution: result: '{}', rtype: '{}'\n".format(result, rtype))
             if rtype == ResultType.REDIRECTION:
                 raise cherrypy.HTTPRedirect(result)
             elif rtype == ResultType.CONTENT:
@@ -43,10 +46,6 @@ class PoorBunny(object):
 
 
 def start_bunny_server(bunny, port=None, host='0.0.0.0', errorlog=None, accesslog=None):
-    if not port:
-        port = DEFAULT_PORT
-    if not host:
-        host = '127.0.0.1'
     cherrypy.server.socket_host = host
     cherrypy.server.socket_port = port
     cherrypy.config['log.error_file'] = errorlog
@@ -55,21 +54,24 @@ def start_bunny_server(bunny, port=None, host='0.0.0.0', errorlog=None, accesslo
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Poor Bunny Server.')
+    default_config_path = os.path.join(CURRENT_DIR, "config.txt")
+    parser = argparse.ArgumentParser(description='Poor Bunny Server.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--port', type=int, required=False,
-                        help='Port to run')
+                        help='Port to run', default=DEFAULT_PORT)
     parser.add_argument('--host', type=str, required=False,
-                        help='accesslog path')
+                        help='accesslog path', default='127.0.0.1')
     parser.add_argument('--errorlog', type=str, required=False,
                         help='errorlog path')
     parser.add_argument('--accesslog', type=str, required=False,
                         help='accesslog path')
+    parser.add_argument('--config_path', type=str, required=False,
+                        help='command config path', default=default_config_path)
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    start_bunny_server(PoorBunny(), args.port, args.host, args.errorlog, args.accesslog)
+    start_bunny_server(PoorBunny(config_path=args.config_path), args.port, args.host, args.errorlog, args.accesslog)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,25 @@
+# lines starting with '#' will be ignored
+# config format "<command_trigger> <command_url_format>"
+# Execution: <command_trigger> args will be forwarded to <command_url_format> using String.format()
+# e.g. config: yt https://www.youtube.com/results?search_query={}
+# search term 'yt comedy clips' will be redirected to "https://www.youtube.com/results?search_query=comedy clips"
+# Note: only single arg supported currently
+# TODO: make it customizable with a simplified dsl
+
+g https://www.google.com/search?q={}
+gl https://www.google.com/search?q={}&btnI
+gm https://mail.google.com/mail/u/{}/#inbox
+gms https://mail.google.com/mail/u/#search/{}
+yt https://www.youtube.com/results?search_query={}
+
+# profile pages
+ip https://one.airbnb.com/people/anoop_chaurasiya
+gp https://github.com/anoopc1
+
+# Q&A
+st https://stackoverflow.com/search?q={}
+
+# language references
+cpp http://www.cplusplus.com/search.do?q={}
+py2 https://docs.python.org/2/search.html?q={}
+py3 https://docs.python.org/3/search.html?q={}

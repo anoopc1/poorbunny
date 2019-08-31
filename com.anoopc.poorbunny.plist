@@ -1,0 +1,26 @@
+<!--
+    Store under ~/Library/LaunchAgents/com.anoopc.poorbunny.plist
+    launchctl load ~/Library/LaunchAgents/com.anoopc.poorbunny.plist
+    launchctl start com.anoopc.poorbunny
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.anoopc.poorbunny</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/python3</string>
+        <string>/Users/anoopchaurasiya/public_repos/poorbunny/poorbunny.py</string>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/Users/anoopchaurasiya/public_repos/poorbunny/stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/anoopchaurasiya/public_repos/poorbunny/stderr.log</string>
+    <key>WorkingDirectory</key>
+    <string>/Users/anoopchaurasiya/public_repos/poorbunny</string>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>

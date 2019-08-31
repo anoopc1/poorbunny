@@ -23,3 +23,8 @@ st https://stackoverflow.com/search?q={}
 cpp http://www.cplusplus.com/search.do?q={}
 py2 https://docs.python.org/2/search.html?q={}
 py3 https://docs.python.org/3/search.html?q={}
+
+#Internal
+rg https://sourcegraph.d.musta.ch/search?q={}
+as https://one.airbnb.com/search?q={}
+apr https://git.musta.ch/airbnb/apps/pull/{}

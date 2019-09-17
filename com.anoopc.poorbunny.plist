@@ -11,15 +11,10 @@
     <string>com.anoopc.poorbunny</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/bin/python3</string>
-        <string>/Users/anoopchaurasiya/public_repos/poorbunny/poorbunny.py</string>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/usr/local/bin/python3 ~/public_repos/poorbunny/poorbunny.py > ~/public_repos/poorbunny/stdout.log 2> ~/public_repos/poorbunny/stderr.log</string>
     </array>
-    <key>StandardOutPath</key>
-    <string>/Users/anoopchaurasiya/public_repos/poorbunny/stdout.log</string>
-    <key>StandardErrorPath</key>
-    <string>/Users/anoopchaurasiya/public_repos/poorbunny/stderr.log</string>
-    <key>WorkingDirectory</key>
-    <string>/Users/anoopchaurasiya/public_repos/poorbunny</string>
     <key>RunAtLoad</key>
     <true/>
 </dict>

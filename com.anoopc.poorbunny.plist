@@ -12,9 +12,16 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
+        <string>--login</string>
         <string>-c</string>
-        <string>/usr/local/bin/python3 ~/public_repos/poorbunny/poorbunny.py > ~/public_repos/poorbunny/stdout.log 2> ~/public_repos/poorbunny/stderr.log</string>
+        <string>python3 poorbunny.py 2>&1 | ts '[%b %d %H:%M:%S]'</string>
     </array>
+    <key>StandardOutPath</key>
+    <string>stdout_stderr.log</string>
+    <key>StandardErrorPath</key>
+    <string>stdout_stderr.log</string>
+    <key>WorkingDirectory</key>
+    <string>/Users/anoopchaurasiya/public_repos/poorbunny</string>
     <key>RunAtLoad</key>
     <true/>
 </dict>
